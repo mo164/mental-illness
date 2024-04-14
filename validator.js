@@ -6,7 +6,7 @@ const validateUserInput = [
   body("email", "Invalid email").isEmail(),
   // Validate password
   body("password", "Password must be at least 6 characters long").isLength({
-    min: 6,
+    min: 8,
   }),
 
   // Middleware to check the result of the validations

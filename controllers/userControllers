@@ -1,2 +1,9 @@
 const User = require('./../models/userModel')
-exports.getAll = async ()
+exports.getAll = async (req,res,naxt)=>{
+    const users = await User.find()
+    res.status(200).json({
+        status: 'success',
+        users: users
+    })
+}
+module.exports 

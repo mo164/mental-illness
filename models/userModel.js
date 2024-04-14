@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Please provide your email'],
      unique: true,
      lowercase: true,
-    validate: [validator.isEmail, 'Please provide a valid email']
+    validateor: [validator.isEmail, 'Please provide a valid email']
   },
   password: {
     type: String,
@@ -99,5 +99,4 @@ userSchema.pre('save', async function(next) {
 // };
 
 const User = mongoose.model('User', userSchema);
-
 module.exports = User;

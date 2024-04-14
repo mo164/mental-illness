@@ -1,4 +1,4 @@
-const User = require('./../models/userModel')
+const User = require('../models/userModel')
 //const validator = require('./../validator')
 exports.signUp = async (req,res,next) =>{
     const newUser = await User.create({

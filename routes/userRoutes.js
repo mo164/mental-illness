@@ -6,5 +6,6 @@ const validator = require('./../validator')
 const router = express.Router();
 router.get('/', userControllers.getAll)
 router.post('/signUp',validator, authControllers.signUp);
+router.post('/login', authControllers.login);
 
 module.exports = router

@@ -40,7 +40,14 @@ const doctorSchema = new mongoose.Schema({
     },
     aboutDoctor: String,
     experience: String,
-    location: String
+    location: String,
+    ratingsAverage: {
+      type: Number,
+      default: 4.5,
+      min: [1, 'Rating must be above 1.0'],
+      max: [5, 'Rating must be below 5.0'],
+      
+    }
   });
   doctorSchema.pre('save', async function(next) {
     // Only run this function if password was actually modified

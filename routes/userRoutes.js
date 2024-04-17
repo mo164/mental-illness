@@ -7,5 +7,6 @@ const router = express.Router();
 router.get('/getAllDoctors',authControllers.protect,userControllers.getAllDoctors)
 router.post('/signUp',validator, authControllers.signUp);
 router.post('/login', authControllers.login);
+router.post('/addBook',authControllers.protect)
 
 module.exports = router

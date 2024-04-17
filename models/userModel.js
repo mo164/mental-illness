@@ -32,6 +32,11 @@ const userSchema = new mongoose.Schema({
   phoneNumber:{
     type: String,
   },
+  role:{
+    type: String,
+    enum: ['admin','user'],
+    default: 'user'
+  },
   passwordConfirm: {
     type: String,
     required: [true, 'Please confirm your password'],
@@ -49,6 +54,7 @@ const userSchema = new mongoose.Schema({
     min: [1, 'Rating must be above 1.0'],
     max: [5, 'Rating must be below 5.0'],
   },
+  passwordChangedAt: Date
 });
 
 userSchema.pre('save', async function(next) {
@@ -81,19 +87,19 @@ userSchema.methods.correctPassword = async function(candidatePassword,userPasswo
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 
-// userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
-//   if (this.passwordChangedAt) {
-//     const changedTimestamp = parseInt(
-//       this.passwordChangedAt.getTime() / 1000,
-//       10
-//     );
+userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
 
-//     return JWTTimestamp < changedTimestamp;
-//   }
+    return JWTTimestamp < changedTimestamp;
+  }
 
-//   // False means NOT changed
-//   return false;
-// };
+  // False means NOT changed
+  return false;
+};
 
 // userSchema.methods.createPasswordResetToken = function() {
 //   const resetToken = crypto.randomBytes(32).toString('hex');

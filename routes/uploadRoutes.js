@@ -1,25 +1,35 @@
 const express = require('express')
 const router = express.Router()
-const multer = require('multer')
+const upload = require('./../multer')
+const cloudinary = require('./../cloudinary')
 const path = require('path')
-const authControllers = require('./../controllers/authControllers')
-const storage = multer.diskStorage({
-    destination:function(req,file,cb){
-        cb(null,path.join(__dirname,"../pdfs"))
-    },
-    filename:function(req,file,cb){
-        cb(null,file.originalname)
-    }
-})
-
-const upload = multer({storage})
-
-// /api /upload
-router.post('/',
-authControllers.protect,
-authControllers.restrictTo('admin'),
-upload.single('book'),
-(req,res)=>{
-    res.status(200).json({message:'success upload'})
-})
+const Book = require('./../models/bookModel')
+router.post('/uploadBook', upload.single('pdf'),  function (req, res) {
+    cloudinary.uploader.upload(req.file.path, async function (err, result){
+      if(err) {
+        console.log(err);
+        return res.status(500).json({
+          success: false,
+          message: "Error"
+        })
+      }
+     
+     const url = result.secure_url
+       await Book.create({
+        url,
+        name:req.body.name,
+        rate:req.body.rate,
+        language:req.body.language,
+        pages:req.body.pages,
+        description:req.body.description,
+        reviews:req.body.reviews
+     })
+    //  console.log(result)
+      res.status(200).json({
+       status:'sucsess', 
+        message:"book created!", 
+      })
+    })
+  });
+  
 module.exports = router

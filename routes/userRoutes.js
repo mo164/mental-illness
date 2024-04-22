@@ -5,8 +5,13 @@ const userControllers = require('./../controllers/userControllers')
 const validator = require('./../validator')
 const router = express.Router();
 router.get('/getAllDoctors',authControllers.protect,userControllers.getAllDoctors)
+router.get('/getAllUsers',userControllers.getAllUsers)
 router.post('/signUp',validator, authControllers.signUp);
 router.post('/login', authControllers.login);
 router.post('/addBook',authControllers.protect)
+
+router
+.route('/:id')
+.delete(authControllers.protect,userControllers.delete);
 
 module.exports = router

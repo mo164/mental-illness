@@ -15,5 +15,22 @@ exports.getAllDoctors = async (req,res,next)=>{
         users: users
     })
     console.log('getting all doctors by users done')
+
 }
+exports.getAllUsers = async (req,res,next)=>{
+    const userrs = await User.find()
+    res.status(200).json({
+        status: 'success',
+        userrs
+    })
+    console.log('getting all users done')
+    
+}
+exports.delete = async(req, res,next)=>{
+    const user = await User.findByIdAndDelete(req.params.id)
+    res.status(204).json({
+        status: 'success',
+        data: null
+      });
+    };
 module.exports 

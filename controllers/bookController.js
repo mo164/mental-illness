@@ -14,3 +14,10 @@ exports.delete = async(req, res,next)=>{
         data: null
       });
     };
+    exports.getbook = async(req, res, next)=>{
+        const book = await Book.findById(req.params.id).populate('Reviews')
+        res.status(200).json({
+            status: 'success',
+            book
+        })
+    }   

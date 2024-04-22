@@ -8,4 +8,5 @@ router.get('/',bookController.getAll);
 router
   .route('/:id')
   .delete(authControllers.protect, authControllers.restrictTo('admin'),bookController.delete)
+  .get(authControllers.protect,bookController.getbook)
 module.exports = router

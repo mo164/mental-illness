@@ -1,9 +1,9 @@
 const Doctor = require('./../models/doctorModel')
 exports.getAll = async (req,res,next)=>{
-    const users = await Doctor.find()
+    const doctors = await Doctor.find()
     res.status(200).json({
         status: 'success',
-        users: users
+        doctors
     })
     console.log('Done!!!')
 }
@@ -16,10 +16,10 @@ exports.delete = async(req, res,next)=>{
     };
 
 exports.getDoctor = async(req, res, next)=>{
-    const user = await Doctor.findById(req.params.id).populate('Reviews')
+    const doctor = await Doctor.findById(req.params.id).populate('Reviews')
     res.status(200).json({
         status: 'success',
-        users: user
+        doctor
     })
 }   
 module.exports 

@@ -33,7 +33,8 @@ doctorReviewsSchema.pre(/^find/,function(next){
     this.populate({
         path: 'doctor',
         select: 'firstName lastName'
-    }).populate({
+    }) 
+    this.populate({
         path: 'user',
        select: 'firstName lastName'
     })

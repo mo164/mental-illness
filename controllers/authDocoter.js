@@ -4,6 +4,13 @@ const Doctor = require('../models/doctorModel')
 //const validator = require('./../validator')
 const catchAsync = require('./../utils/cathAsync')
 const AppError = require('./../utils/appError')
+const filterObj = (obj, ...allowedFields) => {
+  const newObj = {};
+  Object.keys(obj).forEach(el => {
+    if (allowedFields.includes(el)) newObj[el] = obj[el];
+  });
+  return newObj;
+};
 exports.signUp = catchAsync(async (req,res,next) =>{
     const newUser = await Doctor.create({
         firstName:req.body.firstName,
@@ -92,4 +99,22 @@ exports.login = catchAsync(async (req, res, next) => {
     // GRANT ACCESS TO PROTECTED ROUTE
     req.user = currentUser;
     next();
+  });
+  exports.updateMe = catchAsync(async (req, res, next) => {
+ 
+    // 2) Filtered out unwanted fields names that are not allowed to be updated
+    const filteredBody = filterObj(req.body, 'firstName','lastName' ,'email' , 'password', 'phoneNumber' , 'location');
+  
+    // 3) Update user document
+    const updatedUser = await Doctor.findByIdAndUpdate(req.user.id, filteredBody, {
+      new: true,
+      runValidators: true
+    });
+  
+    res.status(200).json({
+      status: 'success',
+      data: {
+        user: updatedUser
+      }
+    });
   });

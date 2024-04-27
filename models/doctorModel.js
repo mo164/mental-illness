@@ -3,7 +3,10 @@ const validator = require('./../validator');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const doctorSchema = new mongoose.Schema({
-    photo:String,
+    photo:{
+    type: String,
+    default: 'default.png'
+    },
     firstName: {
       type: String,
       required: [true, 'Please tell us your name!']
@@ -39,7 +42,9 @@ const doctorSchema = new mongoose.Schema({
         message: 'Passwords are not the same!'
       }
     },
-    aboutDoctor: String,
+    aboutDoctor:{
+      type:String
+    },
     experience: String,
     location: String,
     ratingsAverage: {

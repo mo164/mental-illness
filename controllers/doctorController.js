@@ -1,4 +1,5 @@
 const Doctor = require('./../models/doctorModel')
+const multer = require('multer')
 exports.getAll = async (req,res,next)=>{
     const doctors = await Doctor.find()
     res.status(200).json({
@@ -22,4 +23,18 @@ exports.getDoctor = async(req, res, next)=>{
         doctor
     })
 }   
+const multerstorage = multer.diskStorage({
+    destination: (req,file,cb)=>{
+      cb(null,'imgs/users')
+    },
+    filename: function (req,file,cb) {
+      cb(null, file.originalname)
+    }
+  
+  });
+  
+  const upload = multer({
+    storage: multerstorage
+})
+exports.uploadPhoto = upload.single('photo')
 module.exports 

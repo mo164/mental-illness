@@ -6,6 +6,8 @@ const catchAsync = require('./../utils/cathAsync')
 const AppError = require('./../utils/appError')
 const sendEmail = require('./../utils/email')
 const crypto = require('crypto')
+const upload = require('./../multer')
+const cloudinary = require('./../cloudinary')
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
   Object.keys(obj).forEach(el => {
@@ -13,6 +15,7 @@ const filterObj = (obj, ...allowedFields) => {
   });
   return newObj;
 };
+
 exports.signUp = catchAsync(async (req,res,next) =>{
     const newUser = await Doctor.create({
         firstName:req.body.firstName,
@@ -106,12 +109,13 @@ exports.login = catchAsync(async (req, res, next) => {
  
     // 2) Filtered out unwanted fields names that are not allowed to be updated
     const filteredBody = filterObj(req.body, 'firstName','lastName' ,'email' , 'password', 'phoneNumber' , 'location');
-  
+    if(req.file) filteredBody.photo = req.file.filename
     // 3) Update user document
     const updatedUser = await Doctor.findByIdAndUpdate(req.user.id, filteredBody, {
       new: true,
       runValidators: true
     });
+    console.log(req.file)
   
     res.status(200).json({
       status: 'success',

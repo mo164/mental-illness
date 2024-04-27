@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('./../validator');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const doctorSchema = new mongoose.Schema({
     photo:String,
     firstName: {
@@ -47,7 +48,9 @@ const doctorSchema = new mongoose.Schema({
       min: [1, 'Rating must be above 1.0'],
       max: [5, 'Rating must be below 5.0'],
       
-    }
+    },
+    passwordResetToken:String,
+  passwordResetExpires: Date
   },{
     toJSON:{virtuals: true},
     toObject:{virtuals: true}
@@ -98,6 +101,21 @@ const doctorSchema = new mongoose.Schema({
     // False means NOT changed
     return false;
   };
+  doctorSchema.methods.createPasswordResetToken = function() {
+    const resetToken = crypto.randomBytes(32).toString('hex');
+  
+    this.passwordResetToken = crypto
+      .createHash('sha256')
+      .update(resetToken)
+      .digest('hex');
+  
+    console.log({ resetToken }, this.passwordResetToken);
+  
+    this.passwordResetExpires = Date.now() + 10 * 60 * 1000 ;
+  
+    return resetToken;
+  };
+  
   
   const Doctor = mongoose.model('Doctor',doctorSchema );
   module.exports = Doctor;

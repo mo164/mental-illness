@@ -11,6 +11,8 @@ router.get('/seeAll',authDocoter.protect, doctorController.getAll)
 router.post('/signUp',validator,authDocoter.signUp)
 router.post('/login',validator,authDocoter.login)
 router.patch('/updateMe',authDocoter.protect,authDocoter.updateMe)
+router.post('/forgotPassword',authDocoter.forgotPassword)
+router.patch('/resetPassword/:token', authDocoter.resetPassword);
 router
 .route('/:id')
 .delete(authDocoter.protect,doctorController.delete)

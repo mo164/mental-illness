@@ -1,5 +1,7 @@
 const User = require('../models/userModel')
 const Doctor = require('../models/doctorModel')
+const multer = require('multer')
+const cloudinary = require('./../cloudinary')
 exports.getAll = async (req,res,next)=>{
     const users = await User.find()
     res.status(200).json({
@@ -33,4 +35,35 @@ exports.delete = async(req, res,next)=>{
         data: null
       });
     };
+//     const multerstorage = multer.diskStorage({
+//         destination: (req,file,cb)=>{
+//           cb(null,'imgs/users')
+//         },
+//         filename: function (req,file,cb) {
+//           cb(null, file.originalname)
+//         }
+      
+//       });
+      
+//       const upload = multer({
+//         storage: multerstorage
+//     })
+//     // exports.uploadPhoto = upload.single('photo', function (req, res) {
+//     //     cloudinary.uploader.upload(req.file.path, async function (err, result){
+//     //       if(err) {
+//     //         console.log(err);
+//     //         return res.status(500).json({
+//     //           success: false,
+//     //           message: "Error"
+//     //         })
+//     //     }
+//     //     const url = result.secure_url
+//     //     await User.findByIdAndUpdate(req.user.id,{photo:url},{
+//     //         new: true,
+//     //         runValidators: true
+//     //     })
+    
+//     // })
+
+// })
 module.exports 

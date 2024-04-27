@@ -23,18 +23,18 @@ exports.getDoctor = async(req, res, next)=>{
         doctor
     })
 }   
-const multerstorage = multer.diskStorage({
-    destination: (req,file,cb)=>{
-      cb(null,'imgs/users')
-    },
-    filename: function (req,file,cb) {
-      cb(null, file.originalname)
-    }
+// const multerstorage = multer.diskStorage({
+//     destination: (req,file,cb)=>{
+//       cb(null,'imgs/users')
+//     },
+//     filename: function (req,file,cb) {
+//       cb(null, file.originalname)
+//     }
   
-  });
+//   });
   
-  const upload = multer({
-    storage: multerstorage
-})
-exports.uploadPhoto = upload.single('photo')
+//   const upload = multer({
+//     storage: multerstorage
+// })
+// exports.uploadPhoto = upload.single('photo')
 module.exports 

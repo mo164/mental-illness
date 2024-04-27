@@ -109,7 +109,7 @@ exports.login = catchAsync(async (req, res, next) => {
  
     // 2) Filtered out unwanted fields names that are not allowed to be updated
     const filteredBody = filterObj(req.body, 'firstName','lastName' ,'email' , 'password', 'phoneNumber' , 'location');
-    if(req.file) filteredBody.photo = req.file.filename
+    //if(req.file) filteredBody.photo = req.file.filename
     // 3) Update user document
     const updatedUser = await Doctor.findByIdAndUpdate(req.user.id, filteredBody, {
       new: true,

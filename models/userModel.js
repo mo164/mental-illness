@@ -6,7 +6,8 @@ const crypto = require('crypto');
 const userSchema = new mongoose.Schema({
  photo:{
   type:String,
-  required: [true, 'Please enter a photo']
+  required: [true, 'Please enter a photo'],
+  default:'default.png'
 },
   firstName: {
     type: String,

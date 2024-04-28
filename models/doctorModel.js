@@ -47,6 +47,7 @@ const doctorSchema = new mongoose.Schema({
     },
     experience: String,
     location: String,
+    rating: Number,
     ratingsAverage: {
       type: Number,
       default: 4.5,

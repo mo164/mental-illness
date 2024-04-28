@@ -26,7 +26,8 @@ exports.signUp = catchAsync(async (req,res,next) =>{
         phoneNumber:req.body.phoneNumber,
         aboutDoctor:req.body.aboutDoctor,
         experience:req.body.experience,
-        photo:req.body.photo
+        photo:req.body.photo,
+        rating:req.body.rating
     })
     const token = jwt.sign({id:newUser._id}, process.env.JWT_SECRET ,{
         expiresIn:process.env.JWT_EXPIRES_IN

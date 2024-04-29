@@ -27,7 +27,7 @@ router.post('/uploadBook', upload.single('pdf'),  function (req, res) {
         pages:req.body.pages,
         description:req.body.description,
         reviews:req.body.reviews,
-        category:req.body.category
+        category:req.body.category,
      })
     //  console.log(result)
       res.status(200).json({

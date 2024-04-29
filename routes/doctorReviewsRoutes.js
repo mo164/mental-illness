@@ -5,6 +5,6 @@ const router = express.Router({mergeParams:true});
 
 router.route('/')
 .get(doctorReviewsController.getAllReviews)
-.post(authControllers.protect,doctorReviewsController.createReview)
+.post(doctorReviewsController.createReview)
 
 module.exports = router;

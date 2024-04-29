@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Book = require('./../models/bookModel');
+const User = require('./../models/userModel');
 const bookReviewsSchema = new mongoose.Schema({
     review:{
         type: String,
@@ -31,9 +32,6 @@ const bookReviewsSchema = new mongoose.Schema({
 })
 bookReviewsSchema.pre(/^find/,function(next){
     this.populate({
-        path: 'book',
-        select: 'name'
-    }).populate({
         path: 'user',
        select: 'firstName lastName'
     })
@@ -54,8 +52,8 @@ bookReviewsSchema.statics.calcAverageRatings = async function(bookId) {
 
     ])
        await Book.findByIdAndUpdate(bookId,{
-            ratingsAverage: status[0].nRating,
-            ratingsQuantity: status[0].avgRating
+            ratingsAverage: stats[0].avgRating,
+            ratingsQuantity: stats[0].nRating
         })
 };
 

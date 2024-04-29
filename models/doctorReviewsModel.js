@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const Doctor = require('./../models/doctorModel')
 const doctorReviewsSchema = new mongoose.Schema({
     review:{
         type: String,
@@ -30,15 +30,34 @@ const doctorReviewsSchema = new mongoose.Schema({
     toObject:{virtuals: true}
 })
 doctorReviewsSchema.pre(/^find/,function(next){
-    this.populate({
-        path: 'doctor',
-        select: 'firstName lastName'
-    }) 
+    
     this.populate({
         path: 'user',
        select: 'firstName lastName'
     })
     next()
+})
+doctorReviewsSchema.statics.calcAverageRatings = async function(doctorId) {
+    const stats = await this.aggregate([
+      {
+        $match: { doctor: doctorId },
+      },
+      {
+        $group: {
+          _id: '$doctor',
+          nRating: { $sum: 1 },
+          avgRating: { $avg: '$rating' }
+        }
+      }
+
+    ])
+       await Doctor.findByIdAndUpdate(doctorId,{
+            ratingsAverage: stats[0].avgRating,   
+            ratingsQuantity: stats[0].nRating
+        })
+};
+doctorReviewsSchema.post('save', function(next){
+    this.constructor.calcAverageRatings(this.doctor)
 })
 const doctorReviews = mongoose.model('doctorReviews', doctorReviewsSchema)
 module.exports = doctorReviews

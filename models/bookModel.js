@@ -29,7 +29,7 @@ const bookSchema = new mongoose.Schema({
   
  bookSchema.virtual('Reviews',{
    ref:'bookReviews',
-   foreignField: 'book',
+   foreignField:'book',
    localField: '_id'
  })
   const Book = mongoose.model('Book',bookSchema );

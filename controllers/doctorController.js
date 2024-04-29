@@ -1,12 +1,19 @@
+const { json } = require('body-parser')
 const Doctor = require('./../models/doctorModel')
-const multer = require('multer')
 exports.getAll = async (req,res,next)=>{
-    const doctors = await Doctor.find()
+    const queryObj = {...req.query}
+    const excludeFields = ['page', 'sort', 'limit' , 'field' ]
+    excludeFields.forEach(el=> delete queryObj[el])
+ // advanced filtering
+ let queryStr = JSON.stringify(queryObj)
+ queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match=>`$${match}`)
+    const query = Doctor.find(JSON.parse(queryStr))
+    const doctors = await query
     res.status(200).json({
         status: 'success',
         doctors
     })
-    console.log('Done!!!')
+    
 }
 exports.delete = async(req, res,next)=>{
     const user = await Doctor.findByIdAndDelete(req.params.id)
@@ -23,18 +30,4 @@ exports.getDoctor = async(req, res, next)=>{
         doctor
     })
 }   
-// const multerstorage = multer.diskStorage({
-//     destination: (req,file,cb)=>{
-//       cb(null,'imgs/users')
-//     },
-//     filename: function (req,file,cb) {
-//       cb(null, file.originalname)
-//     }
-  
-//   });
-  
-//   const upload = multer({
-//     storage: multerstorage
-// })
-// exports.uploadPhoto = upload.single('photo')
 module.exports 

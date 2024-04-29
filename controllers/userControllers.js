@@ -11,12 +11,19 @@ exports.getAll = async (req,res,next)=>{
     console.log('Done!!!')
 }
 exports.getAllDoctors = async (req,res,next)=>{
-    const users = await Doctor.find()
+    const queryObj = {...req.query}
+    const excludeFields = ['page', 'sort', 'limit' , 'field' ]
+    excludeFields.forEach(el=> delete queryObj[el])
+ // advanced filtering
+ let queryStr = JSON.stringify(queryObj)
+ queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match=>`$${match}`)
+    const query = Doctor.find(JSON.parse(queryStr))
+    const doctors = await query
     res.status(200).json({
+        result: doctors.length,
         status: 'success',
-        users: users
+        doctors
     })
-    console.log('getting all doctors by users done')
 
 }
 exports.getAllUsers = async (req,res,next)=>{
@@ -35,35 +42,12 @@ exports.delete = async(req, res,next)=>{
         data: null
       });
     };
-//     const multerstorage = multer.diskStorage({
-//         destination: (req,file,cb)=>{
-//           cb(null,'imgs/users')
-//         },
-//         filename: function (req,file,cb) {
-//           cb(null, file.originalname)
-//         }
-      
-//       });
-      
-//       const upload = multer({
-//         storage: multerstorage
-//     })
-//     // exports.uploadPhoto = upload.single('photo', function (req, res) {
-//     //     cloudinary.uploader.upload(req.file.path, async function (err, result){
-//     //       if(err) {
-//     //         console.log(err);
-//     //         return res.status(500).json({
-//     //           success: false,
-//     //           message: "Error"
-//     //         })
-//     //     }
-//     //     const url = result.secure_url
-//     //     await User.findByIdAndUpdate(req.user.id,{photo:url},{
-//     //         new: true,
-//     //         runValidators: true
-//     //     })
-    
-//     // })
+    exports.getDoctor = async(req, res, next)=>{
+        const doctor = await Doctor.findById(req.params.id).populate('Reviews')
+        res.status(200).json({
+            status: 'success',
+            doctor
+        })
+    }   
 
-// })
 module.exports 

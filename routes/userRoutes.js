@@ -16,6 +16,7 @@ router.patch('/resetPassword/:token', authControllers.resetPassword);
 
 router
 .route('/:id')
-.delete(authControllers.protect,userControllers.delete);
+.delete(authControllers.protect,userControllers.delete)
+.get(authControllers.protect,userControllers.getDoctor)
 
 module.exports = router

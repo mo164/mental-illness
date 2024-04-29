@@ -29,7 +29,7 @@ const doctorSchema = new mongoose.Schema({
       select: false
     },
     phoneNumber:{
-      type: String,
+      type: Number ,
     },
     passwordConfirm: {
       type: String,
@@ -47,13 +47,16 @@ const doctorSchema = new mongoose.Schema({
     },
     experience: String,
     location: String,
-    rating: Number,
     ratingsAverage: {
       type: Number,
       default: 4.5,
       min: [1, 'Rating must be above 1.0'],
       max: [5, 'Rating must be below 5.0'],
       
+    },
+    ratingsQuantity: {
+      type: Number,
+      default: 0
     },
     passwordResetToken:String,
   passwordResetExpires: Date

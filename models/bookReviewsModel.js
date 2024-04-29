@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const Book = require('./../models/bookModel');
 const bookReviewsSchema = new mongoose.Schema({
     review:{
         type: String,
@@ -39,5 +39,29 @@ bookReviewsSchema.pre(/^find/,function(next){
     })
     next()
 })
+bookReviewsSchema.statics.calcAverageRatings = async function(bookId) {
+    const stats = await this.aggregate([
+      {
+        $match: { book: bookId },
+      },
+      {
+        $group: {
+          _id: '$book',
+          nRating: { $sum: 1 },
+          avgRating: { $avg: '$rating' }
+        }
+      }
+
+    ])
+       await Book.findByIdAndUpdate(bookId,{
+            ratingsAverage: status[0].nRating,
+            ratingsQuantity: status[0].avgRating
+        })
+};
+
+bookReviewsSchema.post('save', function(next){
+    this.constructor.calcAverageRatings(this.book)
+})
+
 const bookReviews = mongoose.model('bookReviews', bookReviewsSchema)
 module.exports =  bookReviews

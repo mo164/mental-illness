@@ -7,7 +7,14 @@ exports.getAll = async (req,res,next)=>{
  // advanced filtering
  let queryStr = JSON.stringify(queryObj)
  queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match=>`$${match}`)
-    const query = Doctor.find(JSON.parse(queryStr))
+    let query = Doctor.find(JSON.parse(queryStr))
+
+    // sorting
+    if(req.query.sort){
+        const sortBy = req.query.sort.split(',').join(' ')
+        query = query.sort(sortBy)
+    }
+    // execute the query
     const doctors = await query
     res.status(200).json({
         status: 'success',

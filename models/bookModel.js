@@ -27,9 +27,9 @@ const bookSchema = new mongoose.Schema({
    url: String
   },
   {
-    toObject: { virtuals: true },
-    toJson: { virtuals: true }
-    });
+    toJSON:{virtuals: true},
+    toObject:{virtuals: true}
+});
   
  bookSchema.virtual('Reviews',{
    ref:'bookReviews',

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('./../validator');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
+const { time } = require('console');
 const doctorSchema = new mongoose.Schema({
     photo:{
     type: String,
@@ -9,7 +10,7 @@ const doctorSchema = new mongoose.Schema({
     },
     Specialization:{
       type: String,
-      enum: ['psycholo', 'therapist']
+      enum: ['psychologist', 'therapist']
     },
     firstName: {
       type: String,
@@ -49,8 +50,10 @@ const doctorSchema = new mongoose.Schema({
     aboutDoctor:{
       type:String
     },
-    experience: String,
+    experience: Number,
     location: String,
+    Available:String,
+    Establishment: Date,
     ratingsAverage: {
       type: Number,
       default: 4.5,

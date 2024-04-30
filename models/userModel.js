@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
     select: false
   },
   phoneNumber:{
-    type: String,
+    type: Number,
   },
   role:{
     type: String,
@@ -49,12 +49,7 @@ const userSchema = new mongoose.Schema({
       message: 'Passwords are not the same!'
     }
   },
-  ratingsAverage: {
-    type: Number,
-    default: 4.5,
-    min: [1, 'Rating must be above 1.0'],
-    max: [5, 'Rating must be below 5.0'],
-  },
+  
   passwordChangedAt: Date,
   passwordResetToken:String,
   passwordResetExpires: Date
@@ -71,19 +66,6 @@ userSchema.pre('save', async function(next) {
   this.passwordConfirm = undefined;
   next();
 });
-
-// userSchema.pre('save', function(next) {
-//   if (!this.isModified('password') || this.isNew) return next();
-
-//   this.passwordChangedAt = Date.now() - 1000;
-//   next();
-// });
-
-// userSchema.pre(/^find/, function(next) {
-//   // this points to the current query
-//   this.find({ active: { $ne: false } });
-//   next();
-// });
 
 userSchema.methods.correctPassword = async function(candidatePassword,userPassword) 
   {

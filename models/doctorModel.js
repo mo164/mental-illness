@@ -7,6 +7,10 @@ const doctorSchema = new mongoose.Schema({
     type: String,
     default: 'default.png'
     },
+    Specialization:{
+      type: String,
+      enum: ['']
+    },
     firstName: {
       type: String,
       required: [true, 'Please tell us your name!']

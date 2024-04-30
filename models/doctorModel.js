@@ -9,7 +9,7 @@ const doctorSchema = new mongoose.Schema({
     },
     Specialization:{
       type: String,
-      enum: ['']
+      enum: ['psycholo', 'therapist']
     },
     firstName: {
       type: String,

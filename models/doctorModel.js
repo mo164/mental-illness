@@ -34,7 +34,7 @@ const doctorSchema = new mongoose.Schema({
       select: false
     },
     phoneNumber:{
-      type: Number ,
+      type: String ,
     },
     passwordConfirm: {
       type: String,
@@ -53,7 +53,7 @@ const doctorSchema = new mongoose.Schema({
     experience: String,
     location: String,
     Available:String,
-    Establishment: Date,
+    Establishment:String,
     ratingsAverage: {
       type: Number,
       default: 4.5,

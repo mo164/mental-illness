@@ -50,7 +50,7 @@ const doctorSchema = new mongoose.Schema({
     aboutDoctor:{
       type:String
     },
-    experience: Number,
+    experience: String,
     location: String,
     Available:String,
     Establishment: Date,

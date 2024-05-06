@@ -12,8 +12,6 @@ router.post('/addBook',authControllers.protect)
 router.patch('/updateMe',authControllers.protect,authControllers.updateMe)
 router.post('/forgotPassword',authControllers.forgotPassword)
 router.patch('/resetPassword/:token', authControllers.resetPassword);
-
-
 router
 .route('/:id')
 .delete(authControllers.protect,userControllers.delete)

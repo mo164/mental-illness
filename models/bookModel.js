@@ -22,7 +22,7 @@ const bookSchema = new mongoose.Schema({
     type: String,
     enum: ['arabic', 'english']
    },
-   pages: Number,
+   pages: String,
    description: String,
    url: String
   },

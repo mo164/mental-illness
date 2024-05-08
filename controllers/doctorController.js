@@ -17,6 +17,7 @@ exports.getAll = async (req,res,next)=>{
     // execute the query
     const doctors = await query
     res.status(200).json({
+        results: doctors.length,
         status: 'success',
         doctors
     })

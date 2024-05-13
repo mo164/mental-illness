@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
  photo:{
   type:String,
   required: [true, 'Please enter a photo'],
-  default:'default.png'
+  default:'https://res.cloudinary.com/dg0ic00jx/image/upload/v1715625754/Default_pfp_1_xq2u6v.jpg'
 },
   firstName: {
     type: String,

@@ -42,7 +42,8 @@ exports.signUp = catchAsync(async (req,res,next) =>{
         data:{
            users:newUser
            
-        } 
+        },
+        id:user._id
     })
 })
 exports.login = catchAsync(async (req, res, next) => {
@@ -66,7 +67,7 @@ exports.login = catchAsync(async (req, res, next) => {
     res.status(201).json({
         status: 'success',
         token,
-
+        id:user._id
       })
   });
   exports.protect = catchAsync(async (req, res, next) => {

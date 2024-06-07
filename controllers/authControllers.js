@@ -34,8 +34,8 @@ exports.signUp = catchAsync(async (req,res,next) =>{
         data:{
            users:newUser
            
-        }
-
+        },
+        id:user._id
     })
 })
 exports.login = catchAsync(async (req, res, next) => {

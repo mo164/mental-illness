@@ -59,7 +59,10 @@ exports.login = catchAsync(async (req, res, next) => {
     res.status(201).json({
         status: 'success',
         token,
-        id:user._id
+        id:user._id,
+        firstName:user.firstName,
+        lastName:user.lastName,
+        photo:user.photo
       })
   });
   exports.protect = catchAsync(async (req, res, next) => {

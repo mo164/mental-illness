@@ -34,6 +34,9 @@ bookReviewsSchema.pre(/^find/,function(next){
     this.populate({
         path: 'user',
        select: 'firstName lastName'
+    }).this.populate({
+        path: 'book',
+        select:'name'
     })
     next()
 })

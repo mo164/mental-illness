@@ -7,6 +7,7 @@ const doctorSchema = new mongoose.Schema({
     type: String,
     default: 'https://res.cloudinary.com/dg0ic00jx/image/upload/v1715625754/Default_pfp_1_xq2u6v.jpg'
     },
+    profileImage: { type: Buffer, contentType: String },
     Specialization:{
       type: String,
       enum: ['psychologist', 'therapist']

@@ -15,8 +15,10 @@ const filterObj = (obj, ...allowedFields) => {
   });
   return newObj;
 };
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
-exports.signUp = catchAsync(async (req,res,next) =>{
+exports.signUp = catchAsync( upload.single('profileImage'),async (req,res,next) =>{
     const newUser = await Doctor.create({
         firstName:req.body.firstName,
         lastName:req.body.lastName,
@@ -31,7 +33,8 @@ exports.signUp = catchAsync(async (req,res,next) =>{
         location:req.body.location,
         Specialization:req.body.Specialization,
         Available:req.body.Available,
-        Establishment:req.body.Establishment
+        Establishment:req.body.Establishment,
+        profileImage: profileImage.buffer
     })
     const token = jwt.sign({id:newUser._id}, process.env.JWT_SECRET ,{
         expiresIn:process.env.JWT_EXPIRES_IN
